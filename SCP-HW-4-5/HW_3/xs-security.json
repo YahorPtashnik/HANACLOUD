@@ -1,0 +1,54 @@
+{
+  "xsappname": "HW_3",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.HW_3.view",
+      "description": "Display users"
+    },
+    {
+      "name": "$XSAPPNAME.HW_3.create",
+      "description": "Create users"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "client",
+      "description": "Session Client",
+      "valueType": "int"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    },
+    {
+      "name": "admin",
+      "description": "Can do anything",
+      "scope-references": [
+        "$XSAPPNAME.HW_3.view",
+        "$XSAPPNAME.HW_3.create"
+      ],
+      "attribute-references": [
+      ]
+    },
+    {
+      "name": "SimpleUser",
+      "description": "Display mode only",
+      "scope-references": [
+        "$XSAPPNAME.HW_3.view"
+      ],
+      "attribute-references": [
+      ]
+    }
+	  ]
+}
