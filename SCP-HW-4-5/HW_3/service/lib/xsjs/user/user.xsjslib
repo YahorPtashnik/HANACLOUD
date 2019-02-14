@@ -41,7 +41,9 @@ var user = function (connection) {
 
 
     this.doDelete = function (usid) {
-        const statement = createPreparedDeleteStatement(USER_TABLE, {usid: usid});
+        const statement = createPreparedDeleteStatement(USER_TABLE, {
+            usid: usid
+        });
         connection.executeUpdate(statement.sql, statement.aValues);
 
         connection.commit();
@@ -63,26 +65,17 @@ var user = function (connection) {
     }
 
     function createPreparedInsertStatement(sTableName, oValueObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
+        let oResult = new Result();
 
-        let sColumnList = '', sValueList = '';
+        let sColumnList = '',
+            sValueList = '';
 
-        Object.keys(oValueObject).forEach(value => {
-            sColumnList += `"${value}",`;
-            oResult.aParams.push(value);
-        });
-
-        Object.values(oValueObject).forEach(value => {
+        for (let key in oValueObject) {
+            sColumnList += `"${key}",`;
+            oResult.aParams.push(key);
             sValueList += "?, ";
-            oResult.aValues.push(value);
-        });
-
-        $.trace.error("svalue " + sValueList);
-        $.trace.error("scolumn: " + sColumnList);
+            oResult.aValues.push(oValueObject[key]);
+        }
 
         // Remove the last unnecessary comma and blank
         sColumnList = sColumnList.slice(0, -1);
@@ -95,29 +88,17 @@ var user = function (connection) {
     };
 
     function createPreparedUpdateStatement(sTableName, oValueObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
+        let oResult = new Result();
 
-        let sColumnList = '', sValueList = '';
+        let sColumnList = '',
+            sValueList = '';
 
-        Object.keys(oValueObject).forEach(value => {
-            sColumnList += `"${value}",`;
-            oResult.aParams.push(value);
-        });
-
-        Object.values(oValueObject).forEach(value => {
+        for (let key in oValueObject) {
+            sColumnList += `"${key}",`;
+            oResult.aParams.push(key);
             sValueList += "?, ";
-            oResult.aValues.push(value);
-        });
-
-        let sWhereClause = '';
-        //sWhereClause += `"${oResult.aParams[0]}" + "=" + '${oResult.aValues[0]}'`;
-
-        $.trace.error("svalue " + sValueList);
-        $.trace.error("scolumn: " + sColumnList);
+            oResult.aValues.push(oValueObject[key]);
+        }
 
         // Remove the last unnecessary comma and blank
         sColumnList = sColumnList.slice(0, -1);
