@@ -1,5 +1,5 @@
 ﻿namespace HW_3;
-using HW_3::Fridge;
+using HW_3::User;
 
 context ExtraInfo{
 
@@ -15,7 +15,6 @@ entity Address {
     @Comment: 'House Number'
     hnum : Integer;
 };
-
 entity Cars {
     @Comment: 'Id of Car'
     key crid : String(4);

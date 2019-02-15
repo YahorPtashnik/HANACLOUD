@@ -1,0 +1,28 @@
+service namespace "HW_3"{
+
+    "HW_3::Fridge" as "Fridges"
+                navigates("Fridges_2_Owners" as "toOwner", "Frodges_2_Food" as "toFood")
+            create using "xsjs.user:usersCreate.xsjslib::usersCreate"
+            update using "xsjs.user:usersUpdate.xsjslib::usersUpdate"
+            delete forbidden;
+
+    "HW_3::ExtraInfo.FrodgeOwner" as "Owners"
+            create forbidden
+            update forbidden
+            delete forbidden;
+
+    "HW_3::ExtraInfo.Food" as "Food"
+                navigates("Food_2_Fridge" as "toFridge")
+            create forbidden
+            update forbidden
+            delete forbidden;
+
+    association "Fridges_2_Owners" principal "Owners"("frid")
+            multiplicity "1" dependent "Owners"("frid") multiplicity "1";
+
+    association "Fridges_2_Food" principal "Fridges"("frid")
+            multiplicity "1" dependent "Food"("frid") multiplicity "*";
+
+    association "Food_2_Fridge" principal "Food"("frid")
+            multiplicity "1" dependent "Fridges"("frid") multiplicity "1";
+}
