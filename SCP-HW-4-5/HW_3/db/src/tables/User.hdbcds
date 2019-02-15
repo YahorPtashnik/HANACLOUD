@@ -1,15 +1,18 @@
 namespace HW_3;
 
-using HW_3::ExtraInfo.Address;
-using HW_3::ExtraInfo.Cars;
+using HW_3::ExtraInfo.Food;
+using HW_3::ExtraInfo.FridgeOwner;
 
 
-entity User {
-    @Comment: 'Id of User'
-    key usid : String(4);
-    @Comment: 'Description'
-    name : String(100);
+entity Fridge {
+    @Comment: 'Id of Fridge'
+    key frid : String(4);
+    @Comment: 'Brand's name'
+    bname : String(100);
+		@Comment: 'Capacity'
+		cap: String(5);
+		
 
-    toCars : Association[*] to Cars on toCars.usid = usid;
-    toAddress : Association[1] to Address on toAddress.usid = usid;
+    toFood : Association[*] to Food on toFood.frid = frid;
+    toOwner : Association[1] to FridgeOwner on toOwner.frid = frid;
 };

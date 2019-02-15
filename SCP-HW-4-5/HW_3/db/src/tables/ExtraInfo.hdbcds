@@ -1,5 +1,5 @@
 ﻿namespace HW_3;
-using HW_3::User;
+using HW_3::Fridge;
 
 context ExtraInfo{
 

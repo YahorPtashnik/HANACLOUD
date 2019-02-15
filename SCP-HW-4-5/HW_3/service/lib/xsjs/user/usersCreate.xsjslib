@@ -1,168 +1,44 @@
-/**
- @param {connection} Connection - The SQL connection used in the OData request
- @param {beforeTableName} String - The name of a temporary table with the single entry before the operation (UPDATE and DELETE events only)
- @param {afterTableName} String -The name of a temporary table with the single entry after the operation (CREATE and UPDATE events only)
- */
- 
- const USER_TABLE = "HW_3::User";
- const SEQ_NAME = "HW_3::usid";
- 
-function usersCreate(param){
-    $.trace.error(JSON.stringify(param));
-    var after = param.afterTableName;
+const _TOJSON = $.import('xsjs.user', 'toJSON').toJSON;
+const toJSON = new _TOJSON();
 
-    //Get Input New Record Values
-    var	pStmt = param.connection.prepareStatement("select * from \"" + after + "\"");
-    var oResult = pStmt.executeQuery();
+const USER_TABLE = "HW_3::User";
+const USER_ID = "HW_3::usid";
 
-    var oUserItems = recordSetToJSON(oResult, "items");
-    var oUser = oUserItems.items[0];
-    $.trace.error(JSON.stringify(oUser));
+function usersCreate(param) {
+	$.trace.error(JSON.stringify(param));
+	var after = param.afterTableName;
 
-    //TODO now HERE you have oUser object. Similar to xsjs/lib/user/user.xsjslib method doPost line 13
+	//Get Input New Record Values
+	var pStmt = param.connection.prepareStatement("select * from \"" + after + "\"");
+	var oResult = pStmt.executeQuery();
+
+	var oUserItems = toJSON.recordSetToJSON(oResult, "items");
+	var oUser = oUserItems.items[0];
+	$.trace.error(JSON.stringify(oUser));
 
 	//Get Next Personnel Number
-	pStmt = param.connection.prepareStatement(`select "${SEQ_NAME}".NEXTVAL from dummy`); 
+	pStmt = param.connection.prepareStatement(`select \"${USER_ID}\".NEXTVAL from dummy`);
 	var result = pStmt.executeQuery();
-    
-    while (result.next()) {
+
+	while (result.next()) {
 		oUser.id = result.getString(1);
 	}
-    
-    $.trace.error(JSON.stringify(oUser));
+
+	$.trace.error(JSON.stringify(oUser));
 	pStmt.close();
 	//Insert Record into DB Table and Temp Output Table
-	for( var i = 0; i<2; i++){
-		var pStmt;
-		if(i<1){
-			pStmt = param.connection.prepareStatement(`insert into "${USER_TABLE}" values(?,?)` );			
-		}else{
-			pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"" );
-			pStmt.executeUpdate();
-			pStmt.close();
-			pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?)" );		
-		}
-		pStmt.setString(1, oUser.id.toString());
-		pStmt.setString(2, oUser.name.toString());		
-		pStmt.executeUpdate();
-		pStmt.close();
-	}
+	pStmt = param.connection.prepareStatement(`insert into \"${USER_TABLE}\" values(?,?)`);
+	fillAndExecute(pStmt, oUser);
+	pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"");
+	pStmt.executeUpdate();
+	pStmt.close();
+	pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?)");
+	fillAndExecute(pStmt, oUser);
 }
 
-function recordSetToJSON(rs,rsName){
-    rsName = typeof rsName !== 'undefined' ? rsName : 'entries';
-
-    var meta = rs.getMetaData();
-    var colCount = meta.getColumnCount();
-    var values=[];
-    var table=[];
-    var value="";
-    while (rs.next()) {
-        for (var i=1; i<=colCount; i++) {
-            value = '"'+meta.getColumnLabel(i)+'" : ';
-            switch(meta.getColumnType(i)) {
-                case $.db.types.VARCHAR:
-                case $.db.types.CHAR:
-                    value += '"'+ escapeSpecialChars(rs.getString(i))+'"';
-                    break;
-                case $.db.types.NVARCHAR:
-                case $.db.types.NCHAR:
-                case $.db.types.SHORTTEXT:
-                    value += '"'+escapeSpecialChars(rs.getNString(i))+'"';
-                    break;
-                case $.db.types.TINYINT:
-                case $.db.types.SMALLINT:
-                case $.db.types.INT:
-                case $.db.types.BIGINT:
-                    value += rs.getInteger(i);
-                    break;
-                case $.db.types.DOUBLE:
-                    value += rs.getDouble(i);
-                    break;
-                case $.db.types.DECIMAL:
-                    value += rs.getDecimal(i);
-                    break;
-                case $.db.types.REAL:
-                    value += rs.getReal(i);
-                    break;
-                case $.db.types.NCLOB:
-                case $.db.types.TEXT:
-                    value += '"'+ escapeSpecialChars(rs.getNClob(i))+'"';
-                    break;
-                case $.db.types.CLOB:
-                    value += '"'+ escapeSpecialChars(rs.getClob(i))+'"';
-                    break;
-                case $.db.types.BLOB:
-                    value += '"'+ $.util.convert.encodeBase64(rs.getBlob(i))+'"';
-                    break;
-                case $.db.types.DATE:
-                    var dateTemp = new Date();
-                    dateTemp.setDate(rs.getDate(i));
-                    var dateString = dateTemp.toJSON();
-                    value += '"'+dateString+'"';
-                    break;
-                case $.db.types.TIME:
-                    var dateTemp = new Date();
-                    dateTemp.setDate(rs.getTime(i));
-                    var dateString = dateTemp.toJSON();
-                    value += '"'+dateString+'"';
-                    break;
-                case $.db.types.TIMESTAMP:
-                    var dateTemp = new Date();
-                    dateTemp.setDate(rs.getTimestamp(i));
-                    var dateString = dateTemp.toJSON();
-                    value += '"'+dateString+'"';
-                    break;
-                case $.db.types.SECONDDATE:
-                    var dateTemp = new Date();
-                    dateTemp.setDate(rs.getSeconddate(i));
-                    var dateString = dateTemp.toJSON();
-                    value += '"'+dateString+'"';
-                    break;
-                default:
-                    value += '"'+escapeSpecialChars(rs.getString(i))+'"';
-            }
-            values.push(value);
-        }
-        table.push('{'+values+'}');
-    }
-    return 	JSON.parse('{"'+ rsName +'" : [' + table	+']}');
-
-}
-
-function escapeSpecialChars(input) {
-    if(typeof(input) != 'undefined' && input != null)
-    {
-        return input
-            .replace(/[\\]/g, '\\\\')
-            .replace(/[\"]/g, '\\\"')
-            .replace(/[\/]/g, '\\/')
-            .replace(/[\b]/g, '\\b')
-            .replace(/[\f]/g, '\\f')
-            .replace(/[\n]/g, '\\n')
-            .replace(/[\r]/g, '\\r')
-            .replace(/[\t]/g, '\\t'); }
-    else{
-
-        return "";
-    }
-}
-
-function escapeSpecialCharsText(input) {
-    if(typeof(input) != 'undefined' && input != null)
-    {
-        input.replace(/[\"]/g, '\"\"');
-        if(input.indexOf(",") >= 0 ||
-            input.indexOf("\t") >= 0 ||
-            input.indexOf(";") >= 0 ||
-            input.indexOf("\n") >= 0 ||
-            input.indexOf('"') >= 0 )
-        {input = '"'+input+'"';}
-
-        return input;
-    }
-    else{
-
-        return "";
-    }
+function fillAndExecute(pStmt, oUser) {
+	pStmt.setString(1, oUser.id.toString());
+	pStmt.setString(2, oUser.name.toString());
+	pStmt.executeUpdate();
+	pStmt.close();
 }
