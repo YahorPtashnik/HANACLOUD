@@ -1,0 +1,33 @@
+<mvc:View 
+    controllerName="fridge_display.controller.App" 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:mvc="sap.ui.core.mvc"
+    >
+    <Shell>
+        <App id = "app">
+        <Page
+        id="mainPage"
+        title = "{i18n>mainPageTitle}"
+        class = "sapUiResponsiveContentPadding">
+        <content>
+            <List
+                id="fridgeList"
+				headerText="{i18n>listHeader}"
+				items="{
+					path: 'fridges>/Fridges',
+					factory: '.listFactory'
+				}">
+				<ObjectListItem
+					id="item"
+                    type = "Active"
+                    title = "{fridges>frid}"
+                    number = "Brand: {fridges>bname} | Capacity: {fridges>cap}"
+                    press = ".goToDetails">
+				</ObjectListItem>
+            </List>
+        </content>
+        </Page>
+        </App>  
+    </Shell>        
+</mvc:View>

@@ -1,0 +1,17 @@
+namespace HW_3;
+
+using HW_3::ExtraInfo.Owners;
+using HW_3::ExtraInfo.Food;
+
+
+entity Fridge {
+    @Comment: 'Id of Fridge'
+    key frid : String(4);
+    @Comment: 'Brand name'
+    bname : String(100);
+    @Comment: 'Capacity'
+    cap : String(6);
+
+    toFood : Association[*] to Food on toFood.frid = frid;
+    toOwners : Association[1] to Owners on toOwners.frid = frid;
+};

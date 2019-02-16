@@ -1,0 +1,53 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "HW_3::Fridge",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "HW_3::Fridges.csv",
+        "has_header": true
+      },
+      "import_settings": {
+        "import_columns": [
+          "frid",
+          "bname",
+          "cap"
+        ]
+      }
+    },
+    {
+      "target_table": "HW_3::ExtraInfo.Owners",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "HW_3::Owners.csv",
+        "has_header": true
+      },
+      "import_settings": {
+        "import_columns": [
+					"owid",
+					"frid",
+					"name",
+					"surname",
+					"age"
+        ]
+      }
+    },
+    {
+      "target_table": "HW_3::ExtraInfo.Food",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "HW_3::Food.csv",
+        "has_header": true
+      },
+      "import_settings": {
+        "import_columns": [
+					"foid",
+          "frid",
+          "name",
+					"cur"
+        ]
+      }
+    }
+  ]
+}

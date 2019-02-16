@@ -1,0 +1,31 @@
+﻿namespace HW_3;
+using HW_3::Fridge;
+
+context ExtraInfo{
+
+entity Owners {
+    @Comment: 'Id of Owner'
+    key owid : String(4);
+    @Comment: 'Id of Fridge'
+    frid : String(4);
+    @Comment: 'Name'
+    name : String(100);
+    @Comment: 'Surname'
+    surname : String(100);
+    @Comment: 'Age'
+    age : Integer;
+};
+entity Food {
+    @Comment: 'Id of Car'
+    key foid : String(4);
+    @Comment: 'User for Car'
+    frid : String(4);
+    @Comment: 'Name'
+    name : String(100);
+    @Comment: 'Currency'
+    cur: Integer;
+
+    toFridge : Association[1] to Fridge on toFridge.frid = frid;
+};
+
+};
