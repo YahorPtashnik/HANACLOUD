@@ -12,7 +12,9 @@
         "import_columns": [
           "frid",
           "bname",
-          "cap"
+          "cap",
+          "ts_update",
+          "ts_create"
         ]
       }
     },

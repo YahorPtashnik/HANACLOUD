@@ -11,6 +11,10 @@ entity Fridge {
     bname : String(100);
     @Comment: 'Capacity'
     cap : String(6);
+    @Comment: 'Updated'
+    ts_update: UTCDateTime;
+    @Comment: 'Created'
+    ts_create: UTCDateTime;
 
     toFood : Association[*] to Food on toFood.frid = frid;
     toOwners : Association[1] to Owners on toOwners.frid = frid;

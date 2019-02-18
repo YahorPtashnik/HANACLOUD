@@ -1,7 +1,8 @@
 const _TOJSON = $.import('xsjs.fridge', 'toJSON').toJSON;
 const toJSON = new _TOJSON();
 
-const USER_TABLE = "HW_3::Fridge";
+const FRIDGE_TABLE = "HW_3::Fridge";
+const CURR_TIMESTAMP_FUN = "current_timestamp";
 
 function fridgesUpdate(param){
     var after = param.afterTableName;
@@ -14,15 +15,17 @@ function fridgesUpdate(param){
     $.trace.error("Update oFridge :" + JSON.stringify(oFridge));
 
     pStmt.close();
-    pStmt = param.connection.prepareStatement(`UPDATE \"${FRIDGE_TABLE}\" SET "bname"='${oFridge.bname}', "cap"='${oFridge.cap}' WHERE "frid"=${oFridge.frid}`);   
+    pStmt = param.connection.prepareStatement(`UPDATE "${FRIDGE_TABLE}" SET "bname"='${oFridge.bname}', "cap"='${oFridge.cap}', "ts_update"=${current_timestamp} WHERE "frid"=${oFridge.frid}`);   
     exucuteAndClose(pStmt);
-    pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"" );
-		exucuteAndClose(pStmt);
-		pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?,?)" );
-    pStmt.setString(1, oFridge.frid.toString());
-		pStmt.setString(2, oFridge.bname.toString());
-		pStmt.setString(3, oFridge.cap.toString());
-    exucuteAndClose(pStmt);
+    //pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"" );
+		//exucuteAndClose(pStmt);
+		//pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?,?,?,?)" );
+    //pStmt.setString(1, oFridge.frid.toString());
+		//pStmt.setString(2, oFridge.bname.toString());
+		//pStmt.setString(3, oFridge.cap.toString());
+    //pSmtm.setTimestamp(4, (new Date()).toISOString());
+  	//pSmtm.setTimestamp(5, (new Date()).toISOString());
+    //exucuteAndClose(pStmt);
 }
 
 function exucuteAndClose(pStmt) {

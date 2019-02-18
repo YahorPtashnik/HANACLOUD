@@ -4,6 +4,17 @@
 	controllerName="fridge_create.controller.App"
 	displayBlock="true">
 	<App id="app" busyIndicatorDelay="0">
-	     <Button text="POST" press="sendPost" />
+			 <Page
+			 		title="Fridge Create">
+					 <Panel class="sapUiResponsiveMargin" width="auto">
+					 	<content>
+						 		<Label text="Brand Name" class="sapUiSmallMargin"/>
+								<Input id="brandNameInput" width="200px"/>
+								<Label text="Capacity" class="sapUiSmallMargin"/>
+								<Input id="capNameInput" width="200px"/>
+								<Button text="Create" press=".createFridge" class="sapUiSmallLeftMargin"/>
+						</content>
+						</Panel>
+				</Page>
   </App>
 </mvc:View>

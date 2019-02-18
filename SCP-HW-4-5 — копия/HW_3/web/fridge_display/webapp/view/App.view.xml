@@ -11,22 +11,47 @@
         title = "{i18n>mainPageTitle}"
         class = "sapUiResponsiveContentPadding">
         <content>
-            <List
-                id="fridgeList"
-				headerText="{i18n>listHeader}"
-				items="{
-					path: 'fridges>/Fridges',
-					factory: '.listFactory'
-				}">
-				<ObjectListItem
-					id="item"
-                    type = "Active"
-                    title = "{fridges>frid}"
-                    number = "Brand: {fridges>bname} | Capacity: {fridges>cap}"
-                    press = ".goToDetails">
-				</ObjectListItem>
-            </List>
-        </content>
+      <Table id="details" items = "{
+      path: 'fridges>/Fridges'
+      }">
+        <columns>
+          <Column id="fridgeIdColumn">
+            <Text text="{i18n>fridgeIdText}" />
+          </Column>
+          <Column id="fridgeBrandNameColumn">
+            <Text text="{i18n>fridgeBrandNameText}" />
+          </Column>
+          <Column id="fridgeCapacityColumn">
+            <Text text="{i18n>fridgeCapacityText}" />
+          </Column>
+          <Column id="fridgeCreatedColumn">
+            <Text text="{i18n>fridgeCreateText}"/>
+          </Column>  
+          <Column id="fridgeUpdatedColumn">
+            <Text text="{i18n>fridgeUpdateText}"/>
+          </Column>        
+        </columns>
+        <items>
+          <ColumnListItem press = ".goToDetails">
+            <cells>
+              <Label text="{fridges>frid}" />
+            </cells>
+            <cells>
+              <Label text="{fridges>bname}" />
+            </cells>
+            <cells>
+              <Label text="{fridges>cap}" />
+            </cells>
+            <cells>
+              <Label text="{fridges>ts_create}" />
+            </cells>
+            <cells>
+              <Label text="{fridges>ts_update}" />
+            </cells>          
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
         </Page>
         </App>  
     </Shell>        

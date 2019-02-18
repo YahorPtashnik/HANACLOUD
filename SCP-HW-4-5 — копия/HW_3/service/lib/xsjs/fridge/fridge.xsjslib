@@ -1,4 +1,4 @@
-var user = function (connection) {
+var fridge = function (connection) {
     const CRUD = $.import('xsjs.fridge', 'fridgesCRUD').fridgesCRUD;
     const crud = new CRUD(connection);
     const FRIDGE_TABLE = "HW_3::Fridge";
