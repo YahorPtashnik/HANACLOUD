@@ -5,21 +5,53 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
     >
-    <Shell>
         <App id = "app">
         <Page
         id="mainPage"
         class = "sapUiResponsiveContentPadding"
         title="{i18n>fridgesText}">
+    <IconTabBar
+		  id="idIconTabBarFiori2"
+		  upperCase="true"
+		  class="sapUiResponsiveContentPadding">
+		<items>
+			<IconTabFilter id="createSomePanel"
+				text="CREATE">
         <Panel class="sapUiResponsiveMargin" width="auto">
-					 	<content>
-						 		<Label text="{i18n>fridgeBrandNameText}" class="sapUiSmallMargin"/>
-								<Input id="brandNameInput" width="200px"/>
-								<Label text="{i18n>fridgeCapacityText}" class="sapUiSmallMargin"/>
-								<Input id="capNameInput" width="200px"/>
-								<Button text="Create" press=".createFridge" class="sapUiSmallLeftMargin"/>
-						</content>
+					 	<l:VerticalLayout
+		        width="100%">
+            <l:content width="100%">
+						 		<Label text="{i18n>fridgeBrandNameText}"/>
+								<Input id="brandNameInput"/>
+								<Label text="{i18n>fridgeCapacityText}"/>
+								<Input id="capNameInput"/>
+            </l:content>
+            <Button text="Create" press=".createFridge" class="sapUiSmallLeftMargin" width="100%"/>
+        </l:VerticalLayout>
 				</Panel>
+
+			</IconTabFilter>
+      <IconTabFilter id="updateSomePanel"
+				text="UPDATE">
+        <Panel class="sapUiResponsiveMargin" width="auto">
+        	<l:VerticalLayout
+		        width="100%">
+					 	<l:content width="100%">
+                <Label text="{i18n>fridgeIdText}"/>
+                <Input id="fridInput_U" enabled="false" />
+						 		<Label text="{i18n>fridgeBrandNameText}" labelFor="brandNameInput_U"/>
+								<Input id="brandNameInput_U" width="100%" required="true"/>
+								<Label text="{i18n>fridgeCapacityText}" labelFor="capNameInput_U"/>
+								<Input id="capNameInput_U" required="true"/>
+						</l:content>
+            </l:VerticalLayout>
+            <Button text="Update" press=".updateFridge" class="sapUiSmallLeftMargin" width="100%"/>
+				</Panel>
+			</IconTabFilter>
+      
+		</items>
+	</IconTabBar>
+        
           <content>
             <Table id="details" items = "{
               path: 'fridges>/Fridges'
@@ -68,6 +100,5 @@
       </Table>
     </content>
         </Page>
-        </App>  
-    </Shell>        
+        </App>        
 </mvc:View>
