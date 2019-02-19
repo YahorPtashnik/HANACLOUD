@@ -10,8 +10,8 @@
 	<Page 
     showNavButton = "true"
     navButtonPress = ".onNavBack"
-    title = "{fridges>frid}">
-    <Panel id="PeopleDetailPanel" headerText="Details" class="sapUiResponsiveMargin" width="auto">
+    title = "{fridge>frid}">
+    <Panel id="fridgeDetailPanel" headerText="Details" class="sapUiResponsiveMargin" width="auto">
     <content>
       <Table>
         <columns>
@@ -34,13 +34,13 @@
         <items>
           <ColumnListItem>
             <cells>
-              <Label text="{fridges>UserName}" />
+              <Label text="{fridge>frid}" />
             </cells>
             <cells>
-              <Label text="{fridges>FirstName}" />
+              <Label text="{fridge>bname}" />
             </cells>
             <cells>
-              <Label text="{People>LastName}" />
+              <Label text="{fridge>cap}" />
             </cells>
             <cells>
               <Label text="{People>Gender}" />

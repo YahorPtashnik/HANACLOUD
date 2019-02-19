@@ -18,12 +18,12 @@ function fridgesCreate(param) {
 
 	//Get Next Personnel Number
 	pStmt = param.connection.prepareStatement(`select "${FRIDGE_ID}".NEXTVAL from dummy`);
-	var result = pStmt.executeQuery();
+	var result = pStmt.executeQuery();	
 
 	while (result.next()) {
 		oFridge.frid = result.getString(1);
 	}
-
+	console.log("POST_METHOD");
 	$.trace.error(JSON.stringify(oFridge));
 	pStmt.close();
 	//Insert Record into DB Table and Temp Output Table
@@ -40,8 +40,8 @@ function fillAndExecute(pStmt, oFridge) {
 	pStmt.setString(1, oFridge.frid.toString());
 	pStmt.setString(2, oFridge.bname.toString());
 	pStmt.setString(3, oFridge.cap.toString());
-	pSmtm.setTimestamp(4, (new Date()).toISOString());
-	pSmtm.setTimestamp(5, (new Date()).toISOString());
+	pStmt.setTimestamp(4, (new Date()).toISOString());
+	pStmt.setTimestamp(5, (new Date()).toISOString());
 	pStmt.executeUpdate();
 	pStmt.close();
 }

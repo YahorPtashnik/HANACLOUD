@@ -4,7 +4,7 @@ service namespace "HW_3"{
                 navigates("Fridges_2_Owners" as "toOwners", "Fridges_2_Food" as "toFood")
             create using "xsjs.fridge:fridgesCreate.xsjslib::fridgesCreate"
             update using "xsjs.fridge:fridgesUpdate.xsjslib::fridgesUpdate"
-            delete forbidden;
+            delete using "xsjs.fridge:fridgesCRUD.xsjslib::fridgesDelete";
 
     "HW_3::ExtraInfo.Owners" as "Owners"
             create forbidden

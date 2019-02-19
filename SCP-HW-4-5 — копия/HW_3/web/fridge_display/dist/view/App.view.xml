@@ -13,7 +13,7 @@
         <content>
       <Table id="details" items = "{
       path: 'fridges>/Fridges'
-      }">
+      }" mode="SingleSelectMaster" onSelectionChange=".goToDetails">
         <columns>
           <Column id="fridgeIdColumn">
             <Text text="{i18n>fridgeIdText}" />

@@ -22,14 +22,10 @@ const fridgeLib = new Fridgelib($.hdb.getConnection({
                         fridgeLib.doDelete($.request.parameters.get("frid"));
                         break;
                     }
-                case $.net.http.GET:
+                default:
                     {
                         fridgeLib.doGet();
                         break;
-                    }
-                default:
-                    {
-                        $.response.status = $.net.http.METHOD_NOT_ALLOWED;
                     }
             }
         } catch (e) {

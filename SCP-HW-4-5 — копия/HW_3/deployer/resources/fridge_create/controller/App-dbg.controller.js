@@ -8,14 +8,14 @@ sap.ui.define([
         onInit: function () {},
         onExit: function () {},
         createFridge: function () {
-            var Name = sap.ui.getCore().byId(this.getView().sId + "--brandNameInput").getValue();
-            var Cap = sap.ui.getCore().byId(this.getView().sId + "--capNameInput").getValue();
+            var Name = this.getView().byId("brandNameInput").getValue();
+            var Cap = this.getView().byId("capNameInput").getValue();
             console.log(Name);
             console.log(Cap);
             var settings = {
                 "async": true,
                 "crossDomain": true,
-                "uri": "https://p2001081083trial-trial-dev-service.cfapps.eu10.hana.ondemand.com/xsodata/HW_3.xsodata/Fridges",
+                "url": "https://p2001081083trial-trial-dev-router.cfapps.eu10.hana.ondemand.com/api/xsodata/HW_3.xsodata/Fridges",
                 "method": "POST",
                 "headers": {
                     "content-type": "application/json"

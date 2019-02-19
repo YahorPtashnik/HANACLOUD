@@ -11,11 +11,31 @@ sap.ui.define([
             return oUIControl;
         },
         goToDetails: function (oEvent) {
-            var oSelectedItem = oEvent.getSource();
-            var context = encodeURIComponent(oSelectedItem.getBindingContext('Fridges').getPath());
-            console.log(context);
+            var oTable = this.getView().byId("details");
+            var index = oTable.getSelectedItem().getBindingContext("fridges").getObject().frid;
+            console.log(index);
             this.getRouter().navTo("details", {
-                id: context
+                id: index
+            });
+        },
+        createFridge: function () {
+            var Name = this.getView().byId("brandNameInput").getValue();
+            var Cap = this.getView().byId("capNameInput").getValue();
+            console.log(Name);
+            console.log(Cap);
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://p2001081083trial-trial-dev-router.cfapps.eu10.hana.ondemand.com/api/xsodata/HW_3.xsodata/Fridges",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json"
+                },
+                "processData": false,
+                "data": "{\"bname\": \"" + Name + "\", \"cap\": \"" + Cap + "\"}"
+            };
+            $.ajax(settings).done(function (response) {
+                console.log(response);
             });
         }
     });

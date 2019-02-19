@@ -3,17 +3,32 @@
     xmlns="sap.m" 
     xmlns:l="sap.ui.layout" 
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
     >
     <Shell>
         <App id = "app">
         <Page
         id="mainPage"
-        title = "{i18n>mainPageTitle}"
-        class = "sapUiResponsiveContentPadding">
-        <content>
-      <Table id="details" items = "{
-      path: 'fridges>/Fridges'
-      }">
+        class = "sapUiResponsiveContentPadding"
+        title="{i18n>fridgesText}">
+        <Panel class="sapUiResponsiveMargin" width="auto">
+					 	<content>
+						 		<Label text="{i18n>fridgeBrandNameText}" class="sapUiSmallMargin"/>
+								<Input id="brandNameInput" width="200px"/>
+								<Label text="{i18n>fridgeCapacityText}" class="sapUiSmallMargin"/>
+								<Input id="capNameInput" width="200px"/>
+								<Button text="Create" press=".createFridge" class="sapUiSmallLeftMargin"/>
+						</content>
+				</Panel>
+          <content>
+            <Table id="details" items = "{
+              path: 'fridges>/Fridges'
+              }" mode="SingleSelectMaster" selectionChange="goToDetails">
+          <headerToolbar>
+            <Toolbar>
+              <Title text="{i18n>mainPageTitle}" level="H2"/>
+            </Toolbar>
+          </headerToolbar>
         <columns>
           <Column id="fridgeIdColumn">
             <Text text="{i18n>fridgeIdText}" />

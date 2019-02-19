@@ -15,7 +15,7 @@ function fridgesUpdate(param){
     $.trace.error("Update oFridge :" + JSON.stringify(oFridge));
 
     pStmt.close();
-    pStmt = param.connection.prepareStatement(`UPDATE "${FRIDGE_TABLE}" SET "bname"='${oFridge.bname}', "cap"='${oFridge.cap}', "ts_update"=${current_timestamp} WHERE "frid"=${oFridge.frid}`);   
+    pStmt = param.connection.prepareStatement(`UPDATE "${FRIDGE_TABLE}" SET "bname"='${oFridge.bname}', "cap"='${oFridge.cap}', "ts_update"=${CURR_TIMESTAMP_FUN} WHERE "frid"=${oFridge.frid}`);   
     exucuteAndClose(pStmt);
     //pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"" );
 		//exucuteAndClose(pStmt);
@@ -23,8 +23,8 @@ function fridgesUpdate(param){
     //pStmt.setString(1, oFridge.frid.toString());
 		//pStmt.setString(2, oFridge.bname.toString());
 		//pStmt.setString(3, oFridge.cap.toString());
-    //pSmtm.setTimestamp(4, (new Date()).toISOString());
-  	//pSmtm.setTimestamp(5, (new Date()).toISOString());
+    //pStmt.setTimestamp(4, (new Date()).toISOString());
+  	//pStmt.setTimestamp(5, (new Date()).toISOString());
     //exucuteAndClose(pStmt);
 }
 
