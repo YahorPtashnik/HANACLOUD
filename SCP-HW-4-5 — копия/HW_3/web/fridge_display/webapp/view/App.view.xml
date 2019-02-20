@@ -9,53 +9,11 @@
         <Page
         id="mainPage"
         class = "sapUiResponsiveContentPadding"
-        title="{i18n>fridgesText}">
-    <IconTabBar
-		  id="idIconTabBarFiori2"
-		  upperCase="true"
-		  class="sapUiResponsiveContentPadding">
-		<items>
-			<IconTabFilter id="createSomePanel"
-				text="CREATE">
-        <Panel class="sapUiResponsiveMargin" width="auto">
-					 	<l:VerticalLayout
-		        width="100%">
-            <l:content width="100%">
-						 		<Label text="{i18n>fridgeBrandNameText}"/>
-								<Input id="brandNameInput"/>
-								<Label text="{i18n>fridgeCapacityText}"/>
-								<Input id="capNameInput"/>
-            </l:content>
-            <Button text="Create" press=".createFridge" class="sapUiSmallLeftMargin" width="100%"/>
-        </l:VerticalLayout>
-				</Panel>
-
-			</IconTabFilter>
-      <IconTabFilter id="updateSomePanel"
-				text="UPDATE">
-        <Panel class="sapUiResponsiveMargin" width="auto">
-        	<l:VerticalLayout
-		        width="100%">
-					 	<l:content width="100%">
-                <Label text="{i18n>fridgeIdText}"/>
-                <Input id="fridInput_U" enabled="false" />
-						 		<Label text="{i18n>fridgeBrandNameText}" labelFor="brandNameInput_U"/>
-								<Input id="brandNameInput_U" width="100%" required="true"/>
-								<Label text="{i18n>fridgeCapacityText}" labelFor="capNameInput_U"/>
-								<Input id="capNameInput_U" required="true"/>
-						</l:content>
-            </l:VerticalLayout>
-            <Button text="Update" press=".updateFridge" class="sapUiSmallLeftMargin" width="100%"/>
-				</Panel>
-			</IconTabFilter>
-      
-		</items>
-	</IconTabBar>
-        
+        title="{i18n>fridgesText}">  
           <content>
             <Table id="details" items = "{
               path: 'fridges>/Fridges'
-              }" mode="SingleSelectMaster" selectionChange="goToDetails">
+              }" mode="SingleSelectMaster" >
           <headerToolbar>
             <Toolbar>
               <Title text="{i18n>mainPageTitle}" level="H2"/>
@@ -76,25 +34,40 @@
           </Column>  
           <Column id="fridgeUpdatedColumn">
             <Text text="{i18n>fridgeUpdateText}"/>
+          </Column>
+          <Column>
+          </Column>     
+          <Column>
+          </Column>
+          <Column>
           </Column>        
         </columns>
         <items>
-          <ColumnListItem press = ".goToDetails">
+          <ColumnListItem>
             <cells>
-              <Label text="{fridges>frid}" />
+              <Input value="{fridges>frid}" editable="false" />
             </cells>
             <cells>
-              <Label text="{fridges>bname}" />
+              <Input value="{fridges>bname}" editable="false" />
             </cells>
             <cells>
-              <Label text="{fridges>cap}" />
+              <Input value="{fridges>cap}" editable="false" />
             </cells>
             <cells>
-              <Label text="{fridges>ts_create}" />
+              <Input value="{fridges>ts_create}" editable="false" />
             </cells>
             <cells>
-              <Label text="{fridges>ts_update}" />
-            </cells>          
+              <Input value="{fridges>ts_update}" editable="false" />
+            </cells>
+            <cells>
+              <Button icon="sap-icon://edit" text="Edit"  press=".goToDetails" enabled="false"/>         
+            </cells>
+            <cells>
+              <Button icon="sap-icon://save" text="Save" press=".updateFridge"  enabled="false"/>
+            </cells>
+            <cells>
+              <Button icon="sap-icon://delete" text="Delete" press=".deleteFridge"  enabled="false"/>
+            </cells>
           </ColumnListItem>
         </items>
       </Table>
