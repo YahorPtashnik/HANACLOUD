@@ -13,7 +13,7 @@
           <content>
             <Table id="details" items = "{
               path: 'fridges>/Fridges'
-              }" mode="SingleSelectMaster" >
+              }" mode="SingleSelectMaster" selectionChange="selectFridge" growing="true" growingThreshold="5">
           <headerToolbar>
             <Toolbar>
               <Title text="{i18n>mainPageTitle}" level="H2"/>
@@ -40,6 +40,7 @@
           <Column>
           </Column>
           <Column>
+            <Button icon="sap-icon://create" press=".showCreateDialog"/>
           </Column>        
         </columns>
         <items>
@@ -60,13 +61,13 @@
               <Input value="{fridges>ts_update}" editable="false" />
             </cells>
             <cells>
-              <Button icon="sap-icon://edit" text="Edit"  press=".goToDetails" enabled="false"/>         
+              <Button icon="sap-icon://edit" text="Edit"  press=".goToDetails" enabled="false" width="100%"/>         
             </cells>
             <cells>
-              <Button icon="sap-icon://save" text="Save" press=".updateFridge"  enabled="false"/>
+              <Button icon="sap-icon://save" text="Save" press=".updateFridge"  enabled="false" width="100%"/>
             </cells>
             <cells>
-              <Button icon="sap-icon://delete" text="Delete" press=".deleteFridge"  enabled="false"/>
+              <Button icon="sap-icon://delete" text="Delete" press=".deleteFridge"  enabled="false" width="100%"/>
             </cells>
           </ColumnListItem>
         </items>

@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout" >
+   <Dialog title="Create new fridge" id="createDialog">
+        <Panel width="100%">
+        <l:VerticalLayout>
+            <l:content>
+            <Label text="Brand name" width="300px" labelFor="newBrandNameInput"/>
+            <Input id="newBrandNameInput" width="300px" required="true"/>
+            <Label text="Capacity" width="300px" labelFor="newCapInput"/>
+            <Input id="newCapInput" width="300px" required="true"/>
+            <Button text="Create" type="Accept" width="300px" press=".createFridge"/>
+            <Button text="Cancel" type="Reject" width="300px" press=".closeDialog"/>
+            </l:content>
+        </l:VerticalLayout>
+        </Panel>
+   </Dialog>
+</core:FragmentDefinition>
