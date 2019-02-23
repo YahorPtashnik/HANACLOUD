@@ -85,6 +85,9 @@
             "name": "tmp\\view\\App.view.xml"
         },
         {
+            "name": "tmp\\view\\Create.fragment.xml"
+        },
+        {
             "name": "tmp\\view\\NotFound.view.xml"
         },
         {
@@ -104,6 +107,9 @@
         },
         {
             "name": "view\\App.view.xml"
+        },
+        {
+            "name": "view\\Create.fragment.xml"
         },
         {
             "name": "view\\NotFound.view.xml"

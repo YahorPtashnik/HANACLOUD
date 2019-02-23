@@ -1,0 +1,11 @@
+namespace javaDK;
+
+using javaDK::Person;
+
+entity Cars {
+    @Comment: 'Id of Car'
+    key id : Integer64 generated always as identity ( start with 1 increment by 1 );
+    usid : Integer64;
+    @Comment: 'Name'
+    name : String(100);
+};
