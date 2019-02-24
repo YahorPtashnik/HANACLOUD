@@ -1,19 +1,20 @@
 <core:FragmentDefinition
    xmlns="sap.m"
    xmlns:core="sap.ui.core"
-   xmlns:l="sap.ui.layout" >
-   <Dialog title="Create new fridge" id="createDialog">
-        <Panel width="100%">
+   xmlns:l="sap.ui.layout"
+   xmlns:tnt="sap.tnt">
+   <Dialog title="{i18n>createDialogTitle}" id="createDialog">
         <l:VerticalLayout>
-            <l:content>
-            <Label text="Brand name" width="300px" labelFor="newBrandNameInput"/>
-            <Input id="newBrandNameInput" width="300px" required="true"/>
-            <Label text="Capacity" width="300px" labelFor="newCapInput"/>
-            <Input id="newCapInput" width="300px" required="true"/>
-            <Button text="Create" type="Accept" width="300px" press=".createFridge"/>
-            <Button text="Cancel" type="Reject" width="300px" press=".closeDialog"/>
-            </l:content>
+            <Label text="{i18n>userNameLabelText}" class="sapUiSmallMarginBegin"/>
+            <Input value="{fridgeModel>/bname}" required="true" width="300px" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
+            <Label text="{i18n>fridgeCapacityText}" class="sapUiSmallMarginBegin"/>
+            <Input value="{fridgeModel>/cap}" required="true" width="300px" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
         </l:VerticalLayout>
-        </Panel>
+        <beginButton>
+            <Button icon="sap-icon://accept" type="Accept" press=".createButton" class="roundClass"/>
+            </beginButton>
+            <endButton>
+            <Button icon="sap-icon://decline" type="Reject" press=".closeDialog" class="roundClass"/>
+            </endButton>
    </Dialog>
 </core:FragmentDefinition>

@@ -13,46 +13,46 @@
           <content>
             <Table id="details" items = "{
               path: 'fridges>/Fridges'
-              }" mode="SingleSelectMaster" selectionChange="selectFridge" growing="true" growingThreshold="5">
+              }">
           <headerToolbar>
             <Toolbar>
               <Title text="{i18n>mainPageTitle}" level="H2"/>
             </Toolbar>
           </headerToolbar>
         <columns>
-          <Column id="fridgeIdColumn">
+          <Column>
             <Text text="{i18n>fridgeIdText}" />
           </Column>
-          <Column id="fridgeBrandNameColumn">
+          <Column>
             <Text text="{i18n>fridgeBrandNameText}" />
           </Column>
-          <Column id="fridgeCapacityColumn">
+          <Column>
             <Text text="{i18n>fridgeCapacityText}" />
           </Column>
-          <Column id="fridgeCreatedColumn">
+          <Column>
             <Text text="{i18n>fridgeCreateText}"/>
           </Column>  
-          <Column id="fridgeUpdatedColumn">
+          <Column>
             <Text text="{i18n>fridgeUpdateText}"/>
           </Column>
-          <Column>
+          <Column width="60px">
           </Column>     
-          <Column>
+          <Column width="60px">
           </Column>
-          <Column>
-            <Button icon="sap-icon://create" press=".showCreateDialog"/>
+          <Column width="60px">
+            <Button icon="sap-icon://create" press=".showCreateDialog" class="roundClass"/>
           </Column>        
         </columns>
         <items>
           <ColumnListItem>
             <cells>
-              <Input value="{fridges>frid}" editable="false" />
+              <Input value="{fridges>frid}" editable="false" class="minInput"/>
             </cells>
             <cells>
-              <Input value="{fridges>bname}" editable="false" />
+              <Input value="{fridges>bname}" editable="false"/>
             </cells>
             <cells>
-              <Input value="{fridges>cap}" editable="false" />
+              <Input value="{fridges>cap}" editable="false"/>
             </cells>
             <cells>
               <Input value="{fridges>ts_create}" editable="false" />
@@ -61,13 +61,13 @@
               <Input value="{fridges>ts_update}" editable="false" />
             </cells>
             <cells>
-              <Button icon="sap-icon://edit" text="Edit"  press=".goToDetails" enabled="false" width="100%"/>         
+              <Button icon="sap-icon://edit" press=".editButton"  class="roundClass" type="Default" enabled="true"/>         
             </cells>
             <cells>
-              <Button icon="sap-icon://save" text="Save" press=".updateFridge"  enabled="false" width="100%"/>
+              <Button icon="sap-icon://save" press=".saveButton" class="roundClass" type="Accept"  enabled="false"/>
             </cells>
             <cells>
-              <Button icon="sap-icon://delete" text="Delete" press=".deleteFridge"  enabled="false" width="100%"/>
+              <Button icon="sap-icon://delete" press=".deleteButton" class="roundClass" type="Reject"  enabled="false"/>
             </cells>
           </ColumnListItem>
         </items>

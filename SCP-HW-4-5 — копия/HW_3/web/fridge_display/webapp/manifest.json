@@ -53,9 +53,17 @@
                 "settings": {
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
-                    "useBatch": false,
+                    "useBatch": true,
                     "disableHeadRequestForToken": true
                 }
+            },
+            "config": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "./model/config.json"
+            },
+            "fridgeModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "./model/fridgeModel.json"
             }
         },
         "routing": {
@@ -71,8 +79,7 @@
                 },
                 "async": true
             },
-            "routes": [
-                {
+            "routes": [{
                     "pattern": "",
                     "name": "appHome",
                     "target": "app"
@@ -99,6 +106,11 @@
                     "viewName": "NotFound",
                     "transition": "show"
                 }
+            },
+            "resources": {
+                "css": [{
+                    "uri": "css/style.css"
+                }]
             }
         }
     }
