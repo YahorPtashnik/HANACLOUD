@@ -8,19 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sap.cloud.sdk.cloudplatform.CloudPlatform;
+import com.sap.cloud.sdk.cloudplatform.ScpCfCloudPlatform;
 import com.sap.cloud.sdk.cloudplatform.connectivity.DestinationAccessor;
 import com.sap.cloud.sdk.cloudplatform.connectivity.GenericDestination;
+import com.google.gson.JsonElement;
 import com.leverx.leverxspringdemo.domain.Destination;
-import com.leverx.leverxspringdemo.domain.Props;
+import com.leverx.leverxspringdemo.domain.Property;
 
 @Service
 public class CloudService {
 
 	@Autowired
 	private CloudPlatform platform;
-
+	@Autowired
+	private ScpCfCloudPlatform namespace;
+	
 	public String getApplicationName() {
 		return platform.getApplicationName();
+	}
+	public Map<String, JsonElement> getNameSpace() {
+		return namespace.getVcapApplication();
 	}
 
 	public List<Destination> getDestinations() {
@@ -34,14 +41,14 @@ public class CloudService {
 			}));
 			destination.setDestinationType(value.getDestinationType().toString());
 			Map<String, String> propertyMap = value.getPropertiesByName();
-			List<Props> propsList = new ArrayList<Props>();
+			List<Property> propertyList = new ArrayList<Property>();
 			propertyMap.forEach((name, data) -> {
-				Props props = new Props();
-				props.setName(name);
-				props.setValue(data);
-				propsList.add(props);
+				Property property = new Property();
+				property.setName(name);
+				property.setValue(data);
+				propertyList.add(property);
 			});
-			destination.setPropsList(propsList);
+			destination.setPropertyList(propertyList);
 			destinationList.add(destination);
 		});
 		return destinationList;

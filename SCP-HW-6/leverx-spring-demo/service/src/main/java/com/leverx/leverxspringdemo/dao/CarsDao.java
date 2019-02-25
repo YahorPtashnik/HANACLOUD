@@ -31,12 +31,12 @@ public class CarsDao implements ICarsDao {
 		Optional<Cars> entity = null;
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"SELECT TOP 1 \"id\", \"name\", \"usid\" FROM \"javaDK::Cars\" WHERE \"id\" = ?")) {
+						"SELECT TOP 1 \"crid\", \"name\", \"usid\" FROM \"HW_3::Cars\" WHERE \"crid\" = ?")) {
 			stmnt.setLong(1, id);
 			ResultSet result = stmnt.executeQuery();
 			if (result.next()) {
 				Cars cars = new Cars();
-				cars.setId(id);
+				cars.setCrid(id);
 				cars.setName(result.getString("name"));
 				cars.setUsid(result.getLong("usid"));
 				entity = Optional.of(cars);
@@ -54,13 +54,13 @@ public class CarsDao implements ICarsDao {
 		List<Cars> carsList = new ArrayList<Cars>();
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn
-						.prepareStatement("SELECT \"id\", \"name\", \"usid\" FROM \"javaDK::Cars\"")) {
+						.prepareStatement("SELECT \"crid\", \"name\", \"usid\" FROM \"HW_3::Cars\"")) {
 			ResultSet result = stmnt.executeQuery();
 			while (result.next()) {
 				Cars cars = new Cars();
-				cars.setId(result.getLong("ID"));
-				cars.setName(result.getString("NAME"));
-				cars.setUsid(result.getLong("USID"));
+				cars.setCrid(result.getLong("crid"));
+				cars.setName(result.getString("name"));
+				cars.setUsid(result.getLong("usid"));
 				carsList.add(cars);
 			}
 		} catch (SQLException e) {
@@ -73,9 +73,10 @@ public class CarsDao implements ICarsDao {
 	public void save(Cars entity) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"INSERT INTO \"javaDK::Cars\"(\"name\", \"usid\") VALUES (?, ?)")) {
-			stmnt.setString(1, entity.getName());
-			stmnt.setLong(2, entity.getUsid());
+						"INSERT INTO \"HW_3::Cars\"(\"crid\",\"name\", \"usid\") VALUES (?,?,?)")) {
+			stmnt.setLong(1, entity.getCrid());
+			stmnt.setString(2, entity.getName());
+			stmnt.setLong(3, entity.getUsid());
 			stmnt.execute();
 		} catch (SQLException e) {
 			logger.error("Error while trying to add entity: " + e.getMessage());
@@ -85,7 +86,7 @@ public class CarsDao implements ICarsDao {
 	@Override
 	public void delete(Long id) {
 		try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmnt = conn.prepareStatement("DELETE FROM \"javaDK::Cars\" WHERE \"id\" = ?")) {
+				PreparedStatement stmnt = conn.prepareStatement("DELETE FROM \"HW_3::Cars\" WHERE \"crid\" = ?")) {
 			stmnt.setLong(1, id);
 			stmnt.execute();
 		} catch (SQLException e) {
@@ -97,10 +98,10 @@ public class CarsDao implements ICarsDao {
 	public void update(Cars entity) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"UPDATE \"javaDK::Cars\" SET \"name\" = ?, \"usid\" = ? WHERE \"id\" = ?")) {
+						"UPDATE \"HW_3::Cars\" SET \"name\" = ?, \"usid\" = ? WHERE \"crid\" = ?")) {
 			stmnt.setString(1, entity.getName());
 			stmnt.setLong(2, entity.getUsid());
-			stmnt.setLong(3, entity.getId());
+			stmnt.setLong(3, entity.getCrid());
 			stmnt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error("Error while trying to update entity: " + e.getMessage());

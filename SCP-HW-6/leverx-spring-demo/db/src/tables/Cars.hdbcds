@@ -1,11 +1,13 @@
-namespace javaDK;
+namespace HW_3;
 
-using javaDK::Person;
+using HW_3::Person;
 
 entity Cars {
     @Comment: 'Id of Car'
-    key id : Integer64 generated always as identity ( start with 1 increment by 1 );
+    key crid : Integer64 generated always as identity ( start with 1 increment by 1 );
     usid : Integer64;
     @Comment: 'Name'
     name : String(100);
+
+    toPerson : Association[1] to Person on toPersong.usid = usid;
 };

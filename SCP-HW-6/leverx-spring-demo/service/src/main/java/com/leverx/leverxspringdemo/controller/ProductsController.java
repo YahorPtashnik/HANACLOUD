@@ -10,11 +10,12 @@ import com.leverx.leverxspringdemo.domain.Products;
 import com.leverx.leverxspringdemo.service.ProductsService;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataException;
 
-@RestController public class ProductsController {    
+@RestController 
+public class ProductsController {    
  @Autowired 
  private ProductsService productService; 
     @GetMapping(value="/products") 
     public List<Products> getAllProducts() throws ODataException {   
-     return productService.getProductAll();  
+     return productService.getProductsOdata("OData");  
      }
 }

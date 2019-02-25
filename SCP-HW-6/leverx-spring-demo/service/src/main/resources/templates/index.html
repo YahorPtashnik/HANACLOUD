@@ -6,12 +6,13 @@
 </head>
 <body>
 	<h2 th:text="'Hello, ' + ${appName} + '.Glad to see you!'">Application</h2>
+	<p th:text="'Namespace: ' + ${VCAP}">VCAP: </p>
 	<div th:each="destination: ${destinations}">
-		<div th:text="'Destination name: ' + ${destination.name}">Destination name: </div>
-		<div th:text="'Destination description: ' + ${destination.description}">Destination description: </div>
-		<div th:text="'Destination type: ' + ${destination.destinationType}">Destination type: </div>
+		<div th:text="'name: ' + ${destination.name}">name: </div>
+		<div th:text="'description: ' + ${destination.description}">description: </div>
+		<div th:text="'destination type: ' + ${destination.destinationType}">destination type: </div>
 		<p>Properties</p>
-		<ul th:each="property: ${destination.propsList}">
+		<ul th:each="property: ${destination.propertyList}">
 			<li th:text="${property.name} + ': ' + ${property.value}">name: value</li>
 		</ul>
 	</div>

@@ -1,45 +1,43 @@
 package com.leverx.leverxspringdemo.domain;
 
+import java.sql.Timestamp;
+
 public class Person {
 	
-	private long id;
-	
+	private long usid;
 	private String name;
+	private Timestamp ts_update;
+	private Timestamp ts_create;
 	
-	private String surname;
+	public Timestamp getTs_update() {
+		return ts_update;
+	}
 	
-	private int age;
-	
-	public long getId() {
-		return id;
+	public void setTs_update(Timestamp ts_update) {
+		this.ts_update = ts_update;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Timestamp getTs_create() {
+		return ts_create;
+	}
+
+	public void setTs_create(Timestamp ts_create) {
+		this.ts_create = ts_create;
 	}
 
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getSurname() {
-		return surname;
+	public long getId() {
+		return usid;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
+	public void setId(long id) {
+		this.usid = id;
 	}
 	
 }

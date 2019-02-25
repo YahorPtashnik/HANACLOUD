@@ -1,0 +1,14 @@
+{
+    "mainTableId": "details",
+    "mainTableModelName": "fridges",
+    "mainTableModelDeleteRequestURL": "https://p2001081083trial-trial-dev-router.cfapps.eu10.hana.ondemand.com/api/xsjs/fridge/fridge.xsjs?frid=",
+    "idPropName": "frid",
+    "fridgeIdInputPosition": 0,
+    "brandNameInputPosition": 1,
+    "capacityInputPosition": 2,
+    "createDateInputPosition": 3,
+    "updateDateInputPosition": 4,
+    "editBtnPosition": 5,
+    "saveBtnPosition": 6,
+    "deleteBtnPosition": 7
+}

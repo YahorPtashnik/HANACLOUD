@@ -9,17 +9,17 @@ public class Products {
 		this.id = id;
 	}
 	private String name;
-	private String description;
+	private String descr;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDescription() {
-		return description;
+	public String getDescr() {
+		return descr;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescr(String descr) {
+		this.descr = descr;
 	}
 }

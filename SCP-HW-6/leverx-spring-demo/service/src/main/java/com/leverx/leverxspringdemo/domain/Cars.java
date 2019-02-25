@@ -2,16 +2,16 @@ package com.leverx.leverxspringdemo.domain;
 
 public class Cars {
 
-	private long id;
+	private long crid;
 	private long usid;
 	private String name;
 
-	public long getId() {
-		return id;
+	public long getCrid() {
+		return crid;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCrid(long crid) {
+		this.crid = crid;
 	}
 
 	public long getUsid() {

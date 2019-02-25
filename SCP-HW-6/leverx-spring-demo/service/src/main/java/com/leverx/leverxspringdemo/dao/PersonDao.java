@@ -1,9 +1,11 @@
 package com.leverx.leverxspringdemo.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,11 @@ import com.leverx.leverxspringdemo.domain.Person;
 public class PersonDao implements IPersonDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonDao.class);
-
+	private static Timestamp getCurrTime() {
+		Date date = new Date(0);
+		Timestamp currtime = new Timestamp(date.getTime());
+		return currtime;
+	}
 	@Autowired
 	private DataSource dataSource;
 
@@ -31,15 +37,15 @@ public class PersonDao implements IPersonDao {
 		Optional<Person> entity = null;
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"SELECT TOP 1 \"id\", \"name\", \"surname\", \"age\" FROM \"javaDK::Person\" WHERE \"id\" = ?")) {
+						"SELECT TOP 1 \"usid\", \"name\", \"ts_update\", \"ts_create\" FROM \"HW_3::Person\" WHERE \"usid\" = ?")) {
 			stmnt.setLong(1, id);
 			ResultSet result = stmnt.executeQuery();
 			if (result.next()) {
 				Person person = new Person();
 				person.setId(id);
 				person.setName(result.getString("name"));
-				person.setSurname(result.getString("surname"));
-				person.setAge(result.getInt("age"));
+				person.setTs_update(result.getTimestamp("ts_update"));
+				person.setTs_create(result.getTimestamp("ts_create"));
 				entity = Optional.of(person);
 			} else {
 				entity = Optional.empty();
@@ -55,14 +61,14 @@ public class PersonDao implements IPersonDao {
 		List<Person> personList = new ArrayList<Person>();
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn
-						.prepareStatement("SELECT \"id\", \"name\", \"surname\", \"age\" FROM \"javaDK::Person\"")) {
+						.prepareStatement("SELECT \"usid\", \"name\", \"ts_update\", \"ts_create\" FROM \"HW_3::Person\"")) {
 			ResultSet result = stmnt.executeQuery();
 			while (result.next()) {
 				Person person = new Person();
-				person.setId(result.getLong("ID"));
-				person.setName(result.getString("NAME"));
-				person.setSurname(result.getString("SURNAME"));
-				person.setAge(result.getInt("AGE"));
+				person.setId(result.getLong("usid"));
+				person.setName(result.getString("name"));
+				person.setTs_update(result.getTimestamp("ts_update"));
+				person.setTs_create(result.getTimestamp("ts_create"));
 				personList.add(person);
 			}
 		} catch (SQLException e) {
@@ -75,10 +81,11 @@ public class PersonDao implements IPersonDao {
 	public void save(Person entity) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"INSERT INTO \"javaDK::Person\"(\"name\", \"surname\", \"age\") VALUES (?, ?, ?)")) {
+						"INSERT INTO \"HW_3::Person\"(\"name\", \"ts_update\", \"ts_create\") VALUES (?, ?, ?)")) {
 			stmnt.setString(1, entity.getName());
-			stmnt.setString(2, entity.getSurname());
-			stmnt.setInt(3, entity.getAge());
+			Timestamp currtime = getCurrTime();
+			stmnt.setTimestamp(2, currtime);
+			stmnt.setTimestamp(3, currtime);
 			stmnt.execute();
 		} catch (SQLException e) {
 			logger.error("Error while trying to add entity: " + e.getMessage());
@@ -88,7 +95,7 @@ public class PersonDao implements IPersonDao {
 	@Override
 	public void delete(Long id) {
 		try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmnt = conn.prepareStatement("DELETE FROM \"javaDK::Person\" WHERE \"id\" = ?")) {
+				PreparedStatement stmnt = conn.prepareStatement("DELETE FROM \"HW_3::Person\" WHERE \"usid\" = ?")) {
 			stmnt.setLong(1, id);
 			stmnt.execute();
 		} catch (SQLException e) {
@@ -100,11 +107,11 @@ public class PersonDao implements IPersonDao {
 	public void update(Person entity) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-						"UPDATE \"javaDK::Person\" SET \"name\" = ?, \"surname\" = ?, \"age\" = ? WHERE \"id\" = ?")) {
+						"UPDATE \"HW_3::Person\" SET \"name\" = ?, \"ts_update\" = ? WHERE \"usid\" = ?")) {
 			stmnt.setString(1, entity.getName());
-			stmnt.setString(2, entity.getSurname());
-			stmnt.setInt(3, entity.getAge());
-			stmnt.setLong(4, entity.getId());
+			Timestamp currtime = getCurrTime();
+			stmnt.setTimestamp(2, currtime);
+			stmnt.setLong(3, entity.getId());
 			stmnt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error("Error while trying to update entity: " + e.getMessage());

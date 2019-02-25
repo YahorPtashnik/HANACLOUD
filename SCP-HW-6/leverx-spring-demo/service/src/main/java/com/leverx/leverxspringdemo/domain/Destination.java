@@ -9,7 +9,7 @@ public class Destination {
 
 	private String destinationType;
 
-	private List<Props> propsList;
+	private List<Property> propertyList;
 
 	public String getName() {
 		return name;
@@ -35,11 +35,11 @@ public class Destination {
 		this.destinationType = destinationType;
 	}
 
-	public List<Props> getPropsList() {
-		return propsList;
+	public List<Property> getPropertyList() {
+		return propertyList;
 	}
 
-	public void setPropsList(List<Props> propsList) {
-		this.propsList = propsList;
+	public void setPropertyList(List<Property> propertyList) {
+		this.propertyList = propertyList;
 	}
 }

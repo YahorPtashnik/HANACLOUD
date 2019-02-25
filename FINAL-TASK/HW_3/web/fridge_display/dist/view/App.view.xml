@@ -1,0 +1,78 @@
+<mvc:View 
+    controllerName="fridge_display.controller.App" 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    >
+        <App id = "app">
+        <Page
+        id="mainPage"
+        class = "sapUiResponsiveContentPadding"
+        title="{i18n>fridgesText}">  
+          <content>
+            <Table id="details" items = "{
+              path: 'fridges>/Fridges'
+              }">
+          <headerToolbar>
+            <Toolbar>
+              <Title text="{i18n>mainPageTitle}" level="H2"/>
+            </Toolbar>
+          </headerToolbar>
+        <columns>
+          <Column>
+            <Text text="{i18n>fridgeIdText}" />
+          </Column>
+          <Column>
+            <Text text="{i18n>fridgeBrandNameText}" />
+          </Column>
+          <Column>
+            <Text text="{i18n>fridgeCapacityText}" />
+          </Column>
+          <Column>
+            <Text text="{i18n>fridgeCreateText}"/>
+          </Column>  
+          <Column>
+            <Text text="{i18n>fridgeUpdateText}"/>
+          </Column>
+          <Column width="60px">
+          </Column>     
+          <Column width="60px">
+          </Column>
+          <Column width="60px">
+            <Button icon="sap-icon://create" press=".showCreateDialog" class="roundClass"/>
+          </Column>        
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <Input value="{fridges>frid}" editable="false" class="minInput"/>
+            </cells>
+            <cells>
+              <Input value="{fridges>bname}" editable="false"/>
+            </cells>
+            <cells>
+              <Input value="{fridges>cap}" editable="false"/>
+            </cells>
+            <cells>
+              <Input value="{fridges>ts_create}" editable="false" />
+            </cells>
+            <cells>
+              <Input value="{fridges>ts_update}" editable="false" />
+            </cells>
+            <cells>
+              <Button icon="sap-icon://edit" press=".editButton"  class="roundClass" type="Default" enabled="true"/>         
+            </cells>
+            <cells>
+              <Button icon="sap-icon://save" press=".saveButton" class="roundClass" type="Accept"  enabled="false"/>
+            </cells>
+            <cells>
+              <Button icon="sap-icon://delete" press=".deleteButton" class="roundClass" type="Reject"  enabled="false"/>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+        </Page>
+        </App>        
+</mvc:View>
