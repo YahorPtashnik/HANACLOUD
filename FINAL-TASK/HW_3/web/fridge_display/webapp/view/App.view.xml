@@ -49,7 +49,7 @@
               <Input value="{fridges>frid}" editable="false" class="minInput"/>
             </cells>
             <cells>
-              <Input value="{fridges>bname}" editable="false"/>
+              <Input value="{fridges>bname}" editable="{path: 'fridges>frid', formatter: '.bnameEnabled'}"/>
             </cells>
             <cells>
               <Input value="{fridges>cap}" editable="false"/>
