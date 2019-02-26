@@ -14,7 +14,8 @@
           "bname",
           "cap",
           "ts_update",
-          "ts_create"
+          "ts_create",
+          "edit_mode"
         ]
       }
     },

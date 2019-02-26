@@ -10,5 +10,7 @@
     "updateDateInputPosition": 4,
     "editBtnPosition": 5,
     "saveBtnPosition": 6,
-    "deleteBtnPosition": 7
+    "deleteBtnPosition": 7,
+    "true": true,
+    "false": false
 }

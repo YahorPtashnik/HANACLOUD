@@ -83,27 +83,28 @@ sap.ui.define([
             }
         },
         ///ROW PROCESSING METHODS
-        editMode: function (items, index, config) {
-            if (items[index].getCells()[config.editBtnPosition].getEnabled()) {
-                items[index].getCells()[config.editBtnPosition].setEnabled(false);
-                items[index].getCells()[config.saveBtnPosition].setEnabled(true);
-                items[index].getCells()[config.deleteBtnPosition].setEnabled(true);
-                items[index].getCells()[config.brandNameInputPosition].setEditable(true);
-                items[index].getCells()[config.capacityInputPosition].setEditable(true);
+        editMode: function (cells, config) {
+            if (cells[config.editBtnPosition].getEnabled()) {
+                cells[config.editBtnPosition].setEnabled(false);
+                cells[config.saveBtnPosition].setEnabled(true);
+                cells[config.deleteBtnPosition].setEnabled(true);
+                cells[config.brandNameInputPosition].setEditable(true);
+                cells[config.capacityInputPosition].setEditable(true);
             } else {
-                items[index].getCells()[config.editBtnPosition].setEnabled(true);
-                items[index].getCells()[config.saveBtnPosition].setEnabled(false);
-                items[index].getCells()[config.deleteBtnPosition].setEnabled(false);
-                items[index].getCells()[config.brandNameInputPosition].setEditable(false);
-                items[index].getCells()[config.capacityInputPosition].setEditable(false);
+                cells[config.editBtnPosition].setEnabled(true);
+                cells[config.saveBtnPosition].setEnabled(false);
+                cells[config.deleteBtnPosition].setEnabled(false);
+                cells[config.brandNameInputPosition].setEditable(false);
+                cells[config.capacityInputPosition].setEditable(false);
             }
         },
         ///CRUD METHODS
         sendPUT: function (model, obj) {
+            var that = this;
             model.update("/Fridges('" + obj.frid + "')", obj, {
                 merge: false,
                 success: function () {
-                    this.createSuccessOnUpdateDialog();
+                    that.createSuccessOnUpdateDialog();
                 },
                 error: function () {
                     jQuery.sap.log.error("Error at PUT request");
@@ -111,10 +112,11 @@ sap.ui.define([
             })
         },
         sendPOST: function (model, obj) {
+            var that = this;
             model.create("/Fridges", obj, {
                 merge: false,
                 success: function () {
-                    this.createSuccessOnCreateDialog();
+                    that.createSuccessOnCreateDialog();
                 },
                 error: function () {
                     jQuery.sap.log.error("Error at POST request");
@@ -141,18 +143,17 @@ sap.ui.define([
             delete oModel.ts_create;
             delete oModel.ts_update;
             //creating json model
-            if (checkModelObject(oModel)) {
+            if (this.checkModelObject(oModel)) {
                 this.sendPOST(mModel, oModel);
                 return true;
             }
         },
-        updateFridge: function (items, index, config, bModel, mModel) {
+        updateFridge: function (cells, config, bModel, mModel) {
             var oModel = bModel.getData();
-            var indexRow = items[index].getCells();
             //creating json model
-            oModel.frid = indexRow[config.fridgeIdInputPosition].getValue();
-            oModel.bname = indexRow[config.brandNameInputPosition].getValue();
-            oModel.cap = indexRow[config.capacityInputPosition].getValue();
+            oModel.frid = cells[config.fridgeIdInputPosition].getValue();
+            oModel.bname = cells[config.brandNameInputPosition].getValue();
+            oModel.cap = cells[config.capacityInputPosition].getValue();
             oModel.ts_create = null;
             oModel.ts_update = null;
             if (this.checkModelObject(oModel)) {
@@ -160,19 +161,19 @@ sap.ui.define([
                 return true;
             }
         },
-        deleteFridge: function (items, index, config, mModel) {
-            var frid = items[index].getCells()[config.fridgeIdInputPosition].getValue();
+        deleteFridge: function (cells, config, mModel) {
+            var frid = cells[config.fridgeIdInputPosition].getValue();
             this.sendDEL(mModel, frid, config);
         },
         bnameEnabled: function (sFrid) {
             console.log(sFrid);
+
             console.log(!!this.oMapEnabled[sFrid]);
             
             return !!this.oMapEnabled[sFrid];
         },
         getTableRowIndex: function (oEvent) {
-            var sId = oEvent.getSource().getParent();
-            console.log(sId);
+            return oEvent.getSource().getParent();
         },
         // ///FRAGMENTS
         showCreateDialog: function () {
@@ -198,24 +199,32 @@ sap.ui.define([
             this.createFridge(this.mFridge, this.fridges);
         },
         editButton: function (oEvent) {
-            var index = this.getTableRowIndex(oEvent);
-            var sId = oEvent.getSource().getBindingContext("fridges").getProperty("frid");
-            this.oMapEnabled[sId] = !!!this.oMapEnabled[sId];
-            console.log(sId);
-            console.log(this.oMapEnabled[sId]);
-            // this.oMapEnabled[sId] = false;
-            // this.editMode(this.mainTable.getItems(), index, this.mConfig);
+            var a = oEvent.getSource().getBindingContext("fridges");
+            console.log(a.getMetadata());
+            var b = this.getView().getModel("fridges");
+            console.log(this.getView().getModel("fridges").getMetadata());
+            
+
+            // console.log(oEvent.getSource().getBindingContext("fridges").sPath.substring(1));
+            // console.log(this.getView().getModel('fridges' + a));
+            // this.getView().getModel('fridges').oData[a].getProperty("edit_mode");
+            // }
+            // else {
+                // oEvent.getSource().getBindingContext("fridges").setProperty("edit_mode", 1);
+            // }
+            var cells = this.getTableRowIndex(oEvent).getCells();
+            this.editMode(cells, this.mConfig);            
         },
         saveButton: function (oEvent) {
-            var index = this.getTableRowIndex(oEvent, this.mainTable, this.mConfig.mainTableModelName, this.mConfig.idPropName);
-            if (this.updateFridge(this.mainTable.getItems(), index, this.mConfig, this.mFridge, this.fridges)) {
-                this.editMode(this.mainTable.getItems(), index, this.mConfig);
+            var cells = this.getTableRowIndex(oEvent).getCells();
+            if (this.updateFridge(cells, this.mConfig, this.mFridge, this.fridges)) {
+                this.editMode(cells, this.mConfig);
             }
         },
         deleteButton: function (oEvent) {
-            var index = this.getTableRowIndex(oEvent, this.mainTable, this.mConfig.mainTableModelName, this.mConfig.idPropName);
-            this.editMode(this.mainTable.getItems(), index, this.mConfig);
-            this.deleteFridge(this.mainTable.getItems(), index, this.mConfig, this.fridges)
+            var cells = this.getTableRowIndex(oEvent).getCells();
+            this.editMode(cells, this.mConfig);
+            this.deleteFridge(cells, this.mConfig, this.fridges)
         }
     });
 });

@@ -15,6 +15,8 @@ entity Fridge {
     ts_update: UTCDateTime;
     @Comment: 'Created'
     ts_create: UTCDateTime;
+    @Comment: 'Edit mode'
+    edit_mode: Integer;
 
     toFood : Association[*] to Food on toFood.frid = frid;
     toOwners : Association[1] to Owners on toOwners.frid = frid;

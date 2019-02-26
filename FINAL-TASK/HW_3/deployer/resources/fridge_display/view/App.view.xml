@@ -1,6 +1,7 @@
 <mvc:View 
     controllerName="fridge_display.controller.App" 
     xmlns="sap.m" 
+    xmlns:core="sap.ui.core"
     xmlns:l="sap.ui.layout" 
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
@@ -9,7 +10,7 @@
         <Page
         id="mainPage"
         class = "sapUiResponsiveContentPadding"
-        title="{i18n>fridgesText}">  
+        title="{i18n>fridgesText}">
           <content>
             <Table id="details" items = "{
               path: 'fridges>/Fridges'
@@ -49,7 +50,7 @@
               <Input value="{fridges>frid}" editable="false" class="minInput"/>
             </cells>
             <cells>
-              <Input value="{fridges>bname}" editable="false"/>
+              <Input value="{fridges>bname}" editable="{path: 'fridges>frid', formatter: '.bnameEnabled'}"/>
             </cells>
             <cells>
               <Input value="{fridges>cap}" editable="false"/>

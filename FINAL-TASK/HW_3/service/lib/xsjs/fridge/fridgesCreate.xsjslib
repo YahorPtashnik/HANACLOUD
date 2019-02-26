@@ -27,12 +27,12 @@ function fridgesCreate(param) {
 	$.trace.error(JSON.stringify(oFridge));
 	pStmt.close();
 	//Insert Record into DB Table and Temp Output Table
-	pStmt = param.connection.prepareStatement(`insert into "${FRIDGE_TABLE}" values(?,?,?,?,?)`);
+	pStmt = param.connection.prepareStatement(`insert into "${FRIDGE_TABLE}" values(?,?,?,?,?,?)`);
 	fillAndExecute(pStmt, oFridge);
 	pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"");
 	pStmt.executeUpdate();
 	pStmt.close();
-	pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?,?,?,?)");
+	pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?,?,?,?,?)");
 	fillAndExecute(pStmt, oFridge);
 }
 
@@ -42,6 +42,7 @@ function fillAndExecute(pStmt, oFridge) {
 	pStmt.setString(3, oFridge.cap.toString());
 	pStmt.setTimestamp(4, (new Date()).toISOString());
 	pStmt.setTimestamp(5, (new Date()).toISOString());
+	pStmt.setInteger(6, parseInt(oFridge.edit_mode);
 	pStmt.executeUpdate();
 	pStmt.close();
 }
