@@ -72,7 +72,7 @@ public class HomeController {
 		return "jwt";
 	}
 
-	@RequestMapping(value = "/scope", method = RequestMethod.GET)
+	@RequestMapping(value = "/	", method = RequestMethod.GET)
 	public String checkScope() throws AccessDeniedException {
 		securityService.userHasAuthorization("Display");
 		return "scope";
