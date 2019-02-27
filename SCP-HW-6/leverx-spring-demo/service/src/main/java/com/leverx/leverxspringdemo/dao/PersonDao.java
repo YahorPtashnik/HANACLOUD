@@ -55,6 +55,28 @@ public class PersonDao implements IPersonDao {
 		}
 		return entity;
 	}
+	public Optional<Person> getById(String id) {
+		Optional<Person> entity = null;
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmnt = conn.prepareStatement(
+						"SELECT TOP 1 * FROM \"HW_3::Person\" INNER JOIN \"HW_3::Cars\" ON \"HW_3::Cars\".\"usid\" = \"HW_3::Person\".\"usid\"")) {
+			stmnt.setString(1, id);
+			ResultSet result = stmnt.executeQuery();
+			if (result.next()) {
+				Person person = new Person();
+				person.setId(id);
+				person.setName(result.getString("name"));
+				person.setTs_update(result.getTimestamp("ts_update"));
+				person.setTs_create(result.getTimestamp("ts_create"));
+				entity = Optional.of(person);
+			} else {
+				entity = Optional.empty();
+			}
+		} catch (SQLException e) {
+			logger.error("Error while trying to get entity by Id: " + e.getMessage());
+		}
+		return entity;
+}
 
 	@Override
 	public List<Person> getAll() {

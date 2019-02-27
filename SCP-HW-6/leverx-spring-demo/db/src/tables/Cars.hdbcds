@@ -9,5 +9,5 @@ entity Cars {
     @Comment: 'Name'
     name : String(100);
 
-    toPerson : Association[1] to Person on toPersong.usid = usid;
+    toPerson : Association[1] to Person on toPerson.usid = usid;
 };
